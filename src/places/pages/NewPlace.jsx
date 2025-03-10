@@ -1,51 +1,30 @@
 import { useCallback, useReducer } from "react";
 import Input from "../../share/components/FormElements/Input";
 import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "../../share/util/validator.js";
+import { useForm } from "../../share/hooks/form-hook.jsx";
 
-const formReducer = (state, action) => {
-    switch (action.type) {
-        case "INPUT_CHANGE": 
-            let isFormValid = true;
-            for (const inputId in state.inputs) {
-                if (inputId === action.inputId)
-                    isFormValid = isFormValid && action.isValid;
-                else 
-                    isFormValid = isFormValid && state.inputs[inputId].isValid;
-            }
-            return {
-                ...state,
-                inputs: {
-                    ...state.inputs,
-                    [action.inputId]: {value: action.value, isValid: action.isValid}
-                },
-                isValid: isFormValid
-            };
-        default: 
-            return state;
-    }
-}
+
 
 const NewPlace = () => {
-    const [formState, dispatch] = useReducer(formReducer, {
-        inputs: {
-            title: {
-                value: "",
-                isValid: false,
-            },
-            description: {
-                value: "",
-                isValid: false,
-            }
+    const [formState, inputHandler] = useForm({
+        title: {
+            value: "",
+            isValid: false,
         },
-        isValid: false,
-    });
-    const inputHandler = useCallback((id, value, isValid) => {
-        dispatch({type: "INPUT_CHANGE", value: value, isValid: isValid, inputId: id})
-    }, []);
+        description: {
+            value: "",
+            isValid: false,
+        },
+        address: {
+            value: "",
+            isValid: false,
+        }
+    }, false);
 
     const placeSubmitHandler = e => {
         e.preventDefault();
         // TODO
+        // send information to the backend using fetch()
     }
     return (<form className="w-[90%] relative m-auto p-[1rem] max-w-[40rem] rounded-[6px] bg-[#e8e8e8]"
                     onSubmit={placeSubmitHandler}

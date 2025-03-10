@@ -1,10 +1,13 @@
+import { Link } from "react-router-dom";
 import PlaceItem from "./PlaceItem"
 
 export default function PlaceList({items}) {
     if (items.length === 0) {
         return (<div>
                     <h2>No Place Found. Please create one</h2>
-                    <button>Share Place</button>
+                    <button>
+                      <Link to="/places/new">Share Place</Link>
+                    </button>
                 </div>);
     }
   return (

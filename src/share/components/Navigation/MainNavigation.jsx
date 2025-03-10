@@ -55,7 +55,7 @@ const MainNavigation = ()=> {
                     </h1>
                 </button>
                 <div>
-                <NavLinks isMobile={false}/>
+                    <NavLinks isMobile={false}/>
                 </div>
                 <svg width='2rem'
                      xmlns="http://www.w3.org/2000/svg" 

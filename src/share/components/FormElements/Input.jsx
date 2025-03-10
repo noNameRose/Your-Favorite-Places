@@ -45,6 +45,7 @@ const Input = ({label, id, element, type, placeholder, rows, errorText, validato
     useEffect(() => {
       onInput(id, value, isValid);
     }, [id, value, isValid, onInput]);
+
     const inputArea = element === "input" ? 
                     (<input id={id} 
                             type={type} 

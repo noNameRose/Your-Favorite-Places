@@ -1,22 +1,25 @@
 import { NavLink } from "react-router-dom";
-
+import { AuthContext } from "../../context/auth-context";
+import { useContext } from "react";
 const NavLinks = ({isMobile}) => {
     let clssName = "flex flex-col gap-[1em] justify-center items-center font-bold";
     if (!isMobile)
         clssName = "hidden sm:flex gap-[1em] items-center font-bold";
+    const auth = useContext(AuthContext);
+
     return (<ul className={clssName}>
                 <li>
                     <NavLink to="/">ALL USERS</NavLink>
                 </li>
-                <li>
-                    <NavLink to="/u1/places">MY PLACES</NavLink>
-                </li>
-                <li>
+                {auth.isLoggedIn && (<li>
+                                        <NavLink to="/u1/places">MY PLACES</NavLink>
+                                    </li>)}
+                {auth.isLoggedIn && (<li>
                     <NavLink to="/places/new">ADD PLACE</NavLink>
-                </li>
-                <li>
+                </li>)}
+                {!auth.isLoggedIn && (<li>
                     <NavLink to="/auth">AUTHENTICATE</NavLink>
-                </li>
+                </li>)}
             </ul>);
 };
 export default NavLinks
