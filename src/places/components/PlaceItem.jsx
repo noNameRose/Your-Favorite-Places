@@ -1,11 +1,12 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import Map from "../../share/components/UIElements/Map.jsx";
 import Modal from "../../share/components/UIElements/Modal";
 import { NavLink } from "react-router-dom";
-
+import { AuthContext } from "../../share/context/auth-context.jsx";
 
 
 export default function PlaceItem({id, image, description, creatorId, coordinates, address, title}) {
+  const auth = useContext(AuthContext);
   const [showMap, setShowMap] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const openMapHandler = () => setShowMap(true);
@@ -67,8 +68,8 @@ export default function PlaceItem({id, image, description, creatorId, coordinate
         </div>
         <div className="flex gap-[1rem] flex-wrap">
           <button className="sm:text-[1rem] p-[0.6em] bg-[#00334e] text-[#e8e8e8] font-bold rounded-[0.5em] text-[0.5rem]" onClick={() => openMapHandler()}>VIEW ON MAP</button>
-          <button className=" sm:text-[1rem] p-[0.6em] bg-[#00334e] text-[#e8e8e8] font-bold rounded-[0.5em] text-[0.5rem]" ><NavLink to={`/places/${id}`}>EDIT</NavLink></button>
-          <button className=" sm:text-[1rem] p-[0.6em] bg-[#00334e] text-[#e8e8e8] font-bold rounded-[0.5em] text-[0.5rem]" onClick={showDeleteWarningHandler}>DELETE</button>
+          {auth.isLoggedIn && <button className=" sm:text-[1rem] p-[0.6em] bg-[#00334e] text-[#e8e8e8] font-bold rounded-[0.5em] text-[0.5rem]" ><NavLink to={`/places/${id}`}>EDIT</NavLink></button>}
+          {auth.isLoggedIn &&  <button className=" sm:text-[1rem] p-[0.6em] bg-[#00334e] text-[#e8e8e8] font-bold rounded-[0.5em] text-[0.5rem]" onClick={showDeleteWarningHandler}>DELETE</button>}
         </div>
       </li>
     </>

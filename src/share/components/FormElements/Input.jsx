@@ -39,7 +39,7 @@ const Input = ({label, id, element, type, placeholder, rows, errorText, validato
         type: "TOUCH"
       })
     };
-
+    const fieldName = label;
     const {value, isValid} = inputState;
 
     useEffect(() => {
@@ -50,22 +50,39 @@ const Input = ({label, id, element, type, placeholder, rows, errorText, validato
                     (<input id={id} 
                             type={type} 
                             placeholder={placeholder} 
-                            className="w-full font-['inherit'] border-[1px] border-[#00334e] px-[0.15rem] py-[0.25rem] focus:outline-0 rounded-[0.2rem]"
+                            className="w-full 
+                                      font-['inherit'] 
+                                      border-[1px] 
+                                      px-[0.15rem] 
+                                      py-[0.25rem] 
+                                      focus:outline-0 
+                                      rounded-[0.2rem]
+                                      "
+                            style={{
+                              borderColor: `${(!inputState.isValid && inputState.isTouch) ? "red" : "#00334E"}`
+                            }}
                             value={inputState.value}
                             onBlur={touchHandler}
                             onChange={changeHandler}
                             />) 
                   : (<textarea id={id} 
                                rows={rows || 3} 
-                               className="w-full border-[1px] border-[#00334e] px-[0.15rem] py-[0.25rem] focus:outline-0 rounded-[0.2rem]"
+                               className="w-full border-[1px]  px-[0.15rem] py-[0.25rem] focus:outline-0 rounded-[0.2rem]"
+                               style={{
+                                borderColor: `${(!inputState.isValid && inputState.isTouch) ? "red" : "#00334E"}`
+                                }}
                                value={inputState.value}
                                onChange={changeHandler}
                                onBlur={touchHandler}
                                />);
-    return (<div className="mx-[1rem] my-[0]">
-                <label htmlFor={id} className="font-bold">{label}</label>
+    return (<div className="mx-[1rem]">
+                <label htmlFor={id} className="font-bold"
+                        style={{
+                            color: `${(!inputState.isValid && inputState.isTouch) ? "red" : "#00334E"}`
+                        }}
+                >{fieldName}</label>
                 {inputArea}
-                {!inputState.isValid && inputState.isTouch && <p>{errorText}</p>}
+                {!inputState.isValid && inputState.isTouch && <p className="text-red-400">{errorText}</p>}
             </div>);
 };
 

@@ -2,8 +2,6 @@ import { Route,Routes} from "react-router-dom"
 import User from "./users/pages/User"
 import NewPlace from "./places/pages/NewPlace"
 import MainNavigation from "./share/components/Navigation/MainNavigation"
-import MobileNav from "./share/components/Navigation/MobileNav"
-import NavLinks from "./share/components/Navigation/NavLinks"
 import UserPlaces from "./places/pages/UserPlaces"
 import UpdatePlace from "./places/pages/UpdatePlace"
 import Auth from "./places/pages/Auth.jsx"
@@ -17,16 +15,26 @@ const App = () => {
   const handlelogout = useCallback(() => {
     setIsLoggedIn(false);
   }, []);
-  return (<>
-          <AuthContext.Provider value={{isLoggedIn: isLoggedIn, login: handlelogin, logout: handlelogout}}>
-            <MainNavigation/>
-            <Routes> 
+
+  let routes;
+  if (isLoggedIn) 
+    routes = (<Routes>
                 <Route path="/" element={<User/>}/>
                 <Route path="/places/new" element={<NewPlace/>}/>
                 <Route path="/:userId/places" element={<UserPlaces/>}/>
                 <Route path="/places/:placeId" element={<UpdatePlace/>}/>
+              </Routes>);
+  else 
+    routes = (<Routes>
+                <Route path="/" element={<User/>}/>
+                <Route path="/:userId/places" element={<UserPlaces/>}/>
                 <Route path="/auth" element={<Auth/>}/>
-            </Routes>
+              </Routes>
+              );
+  return (<>
+          <AuthContext.Provider value={{isLoggedIn: isLoggedIn, login: handlelogin, logout: handlelogout}}>
+            <MainNavigation/>
+            {routes}
            </AuthContext.Provider>
           </>
   )

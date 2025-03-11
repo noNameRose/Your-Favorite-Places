@@ -1,6 +1,6 @@
 import { useForm } from "../../share/hooks/form-hook";
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "../../share/util/validator";
-import Input from "../../share/components/FormElements/Input";
+import Input from "../../share/components/FormElements/Input.jsx";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../share/context/auth-context";
 const Auth = () => {
@@ -40,16 +40,27 @@ const Auth = () => {
         }
         setIsLoginMode(prevMode => !prevMode);
     }
-    return (<>
-                <h2>Login Required</h2>
-                <hr/>
-                <form onSubmit={authSubmitHandler}>
+    return (<div className="max-w-[20rem] 
+                            m-auto 
+                            my-[5em] 
+                            bg-[#e8e8e8] 
+                            p-[1em] 
+                            rounded-[6px]
+                            flex
+                            flex-col
+                            gap-[1em]
+                            items-center
+                            
+                            ">
+                <h2 className="font-bold text-[#00334E]">Login</h2>
+                <hr className="self-stretch text-[#00334E]"/>
+                <form onSubmit={authSubmitHandler} className="self-stretch flex flex-col gap-[1rem]">
                     {!isLoginMode && 
                     <Input
                         element="input"
                         id="name"
                         type="text"
-                        lable="Your name"
+                        label="Your name"
                         validators={[VALIDATOR_REQUIRE()]}
                         errorText="Please enter a name"
                         onInput={inputHandler}
@@ -57,7 +68,7 @@ const Auth = () => {
                     <Input 
                             element="input"
                             id="email"
-                            lable="E-Mail"
+                            label="Email address"
                             validators={[VALIDATOR_EMAIL()]}
                             errorText="Please enter a valid email address."
                             onInput={inputHandler}   
@@ -65,17 +76,27 @@ const Auth = () => {
                      <Input 
                             element="input"
                             id="password"
-                            lable="Password"
+                            label="Password"
                             validators={[VALIDATOR_MINLENGTH(10)]}
-                            errorText="PleasE enter a valid password, at least 10 characters."
+                            errorText="Please enter a valid password"
                             onInput={inputHandler}   
                     />
-                    <button type="submit" disabled={!formState.isValid}>
-                        {isLoginMode ? "LOGIN" : "SIGNUP"}
-                    </button>
-                    <button onClick={swithModeHandler}>Switch to {isLoginMode ? "signup": "login"}</button>
+                    <div className="self-center w-[90%] relative">
+                        <button type="submit" 
+                                disabled={!formState.isValid}
+                                className="font-bold bg-[#5588A3] rounded-[6px] py-[0.3em] text-[#e8e8e8] w-full z-10 relative"
+                                style={{
+                                    transform:  `${formState.isValid ? "translateY(0)" : "translateY(0.3rem)"}`,
+                                    transition: "transform 0.2s"
+                                }}
+                                >
+                            {isLoginMode ? "Login" : "Signup"}
+                        </button>
+                        <div className="absolute w-full h-full top-0 left-0 bg-[#00334E] transform translate-y-[0.3rem] rounded-[6px]"></div>
+                    </div>
+                    <button onClick={swithModeHandler} className="text-[#00334E]">New User? <span className="">Create an account</span></button>
                 </form>
-            </>);
+            </div>);
 }
 
 

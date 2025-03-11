@@ -26,7 +26,18 @@ const NewPlace = () => {
         // TODO
         // send information to the backend using fetch()
     }
-    return (<form className="w-[90%] relative m-auto p-[1rem] max-w-[40rem] rounded-[6px] bg-[#e8e8e8]"
+    return (<form className="w-[90%] 
+                            m-auto 
+                            p-[1rem] 
+                            max-w-[40rem] 
+                            rounded-[6px] 
+                            bg-[#e8e8e8]
+                            flex
+                            flex-col
+                            gap-[1rem]
+                            my-[8rem]
+                        
+                            "
                     onSubmit={placeSubmitHandler}
     >
                 <Input type="text" 
@@ -51,7 +62,12 @@ const NewPlace = () => {
                         validators={[VALIDATOR_REQUIRE()]}
                         onInput={inputHandler}
                         />
-                <button disabled={!formState.isValid} type="submit">ADD PLACE</button>
+                <button disabled={!formState.isValid} 
+                        type="submit"
+                        className="font-bold text-[#e8e8e8] bg-[#5588A3] py-[0.2em] rounded-[6px] w-[90%] sm:w-[95%] self-center"
+                >
+                    Add Place
+                </button>
             </form>)
 };
 

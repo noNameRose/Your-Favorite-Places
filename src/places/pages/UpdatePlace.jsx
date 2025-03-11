@@ -82,7 +82,19 @@ const UpdatePlace = () => {
 
 
     return (
-        <form onSubmit={placeUpdateSubmitHandler}>
+        <form onSubmit={placeUpdateSubmitHandler} 
+                className="w-[90%]
+                            m-auto
+                            p-[1rem]
+                            max-w-[40rem]
+                            rounded-[6px]
+                            bg-[#e8e8e8]
+                            flex
+                            flex-col
+                            gap-[1rem]
+                            my-[8rem]
+                "
+        >
             <Input id="title" 
                     element="input" 
                     label="Title"
@@ -102,7 +114,7 @@ const UpdatePlace = () => {
                     content={formState.inputs.description.value}
                     valid={formState.inputs.title.isValid}                    
             />
-            <button disabled={formState.isValid} type="submit" className="bg-blue-400">UPDATE PLACE</button>
+            <button disabled={!formState.isValid} type="submit" className="font-bold text-[#e8e8e8] bg-[#5588A3] py-[0.2em] rounded-[6px] w-[90%] sm:w-[95%] self-center">Update Place</button>
         </form>
 
     );
