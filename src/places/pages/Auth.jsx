@@ -16,10 +16,34 @@ const Auth = () => {
         }
     }, false);
     const [isLoginMode, setIsLoginMode] = useState(true);
-    const authSubmitHandler = e => {
+    
+    const authSubmitHandler = async e => {
         e.preventDefault();
-        console.log(formState.inputs);
-        auth.login();
+
+        if (isLoginMode) {
+
+        } else {
+            try {
+                const response = await fetch("http://localhost:3000/api/users/signup", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        name: formState.inputs.name.value,
+                        email: formState.inputs.email.value,
+                        password: formState.inputs.password.value
+                    })
+                });
+                const data = await response.json();
+                console.log(data);
+            }
+            catch (err) {
+                console.log(err);
+            }
+        }
+        // console.log(formState.inputs);
+        // auth.login();
     };
 
     const swithModeHandler = () => {

@@ -7,6 +7,8 @@ import UpdatePlace from "./places/pages/UpdatePlace"
 import Auth from "./places/pages/Auth.jsx"
 import { AuthContext } from "./share/context/auth-context.jsx"
 import { useCallback, useState } from "react"
+
+
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const handlelogin = useCallback(() => {
