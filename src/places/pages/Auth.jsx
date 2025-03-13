@@ -27,33 +27,32 @@ const Auth = () => {
 
         if (isLoginMode) {
             try {
-                await sendRequest("http://localhost:3000/api/users/login", "POST", JSON.stringify({
+                 const data = await sendRequest("http://localhost:3000/api/users/login", "POST", JSON.stringify({
                     email: formState.inputs.email.value,
                     password: formState.inputs.password.value,
                 }), {
                     "content-type": "application/json"
                 });
-                auth.login();
+                auth.login(data.user.id);
             }
             catch (err) {
                
             }
         } else {
             try {
-                await sendRequest("http://localhost:3000/api/users/signup", "POST", JSON.stringify({
+                const data = await sendRequest("http://localhost:3000/api/users/signup", "POST", JSON.stringify({
                     name: formState.inputs.name.value,
                     email: formState.inputs.email.value,
                     password: formState.inputs.password.value,
                 }), {
                     "content-type": "application/json"
                 });
-                auth.login();
+                auth.login(data.user.id);
             }
             catch (err) {
                
             }
         }
-        // console.log(formState.inputs);
     };
 
     const swithModeHandler = () => {

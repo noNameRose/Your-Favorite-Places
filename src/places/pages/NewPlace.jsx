@@ -1,12 +1,16 @@
-import { useCallback, useReducer } from "react";
+import { useCallback, useReducer, useContext } from "react";
 import Input from "../../share/components/FormElements/Input";
 import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "../../share/util/validator.js";
 import { useForm } from "../../share/hooks/form-hook.jsx";
 import { useHttpClient } from "../../share/hooks/http-hooks.jsx";
+import { AuthContext } from "../../share/context/auth-context.jsx";
+import ErrorModal from "../../share/components/UIElements/ErrorModal.jsx";
+import LoadingSpinner from "../../share/components/UIElements/LoadingSpinner.jsx";
 
 
 
 const NewPlace = () => {
+    const auth = useContext(AuthContext);
     const {sendRequest, error, clearError, isLoading} = useHttpClient();
     const [formState, inputHandler] = useForm({
         title: {
@@ -23,16 +27,31 @@ const NewPlace = () => {
         }
     }, false);
 
-    const placeSubmitHandler = e => {
+    const placeSubmitHandler = async e => {
         e.preventDefault();
-        sendRequest("http://localhost:3000/api/places", "POST", JSON.stringify({
-            title: formState.inputs.title.value,
-            description: formState.inputs.description.value,
-            address: formState.inputs.address.value,
-            creator: 
-        }));
+        try {
+            await sendRequest(
+                "http://localhost:3000/api/places", 
+                "POST", 
+                JSON.stringify({
+                    title: formState.inputs.title.value,
+                    description: formState.inputs.description.value,
+                    address: formState.inputs.address.value,
+                    creator: auth.userId,
+                }),
+                {"content-type": "application/json"}
+            );
+
+        }
+        catch (err) {
+
+        }
     }
-    return (<form className="w-[90%] 
+    return (
+    
+    <>
+    <ErrorModal error={error} onClear={clearError}/>
+    <form className="w-[90%] 
                             m-auto 
                             p-[1rem] 
                             max-w-[40rem] 
@@ -46,6 +65,7 @@ const NewPlace = () => {
                             "
                     onSubmit={placeSubmitHandler}
     >
+                {isLoading && <LoadingSpinner/>}
                 <Input type="text" 
                         id="title"
                         element="input" 
@@ -74,7 +94,9 @@ const NewPlace = () => {
                 >
                     Add Place
                 </button>
-            </form>)
+            </form>
+        </>
+            )
 };
 
 
