@@ -28,7 +28,8 @@ const NewPlace = () => {
         sendRequest("http://localhost:3000/api/places", "POST", JSON.stringify({
             title: formState.inputs.title.value,
             description: formState.inputs.description.value,
-            address: formState
+            address: formState.inputs.address.value,
+            creator: 
         }));
     }
     return (<form className="w-[90%] 
