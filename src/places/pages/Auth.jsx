@@ -33,7 +33,7 @@ const Auth = () => {
                 }), {
                     "content-type": "application/json"
                 });
-                auth.login(data.user.id);
+                auth.login(data.user._id);
             }
             catch (err) {
                
@@ -47,7 +47,7 @@ const Auth = () => {
                 }), {
                     "content-type": "application/json"
                 });
-                auth.login(data.user.id);
+                auth.login(data.user._id);
             }
             catch (err) {
                

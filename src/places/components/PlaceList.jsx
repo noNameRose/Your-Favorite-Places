@@ -14,7 +14,7 @@ export default function PlaceList({items}) {
     <ul className="width-[90%] m-auto flex flex-col gap-[2em] items-center p-[2rem]">
         {items.map(place => <PlaceItem key={place.id} 
                                        id={place.id} 
-                                       image={place.imageUrl}
+                                       image={place.image}
                                        description={place.description}
                                        creatorId={place.creator}
                                        coordinates={place.location}
