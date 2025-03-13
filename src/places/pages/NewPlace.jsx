@@ -2,10 +2,12 @@ import { useCallback, useReducer } from "react";
 import Input from "../../share/components/FormElements/Input";
 import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "../../share/util/validator.js";
 import { useForm } from "../../share/hooks/form-hook.jsx";
+import { useHttpClient } from "../../share/hooks/http-hooks.jsx";
 
 
 
 const NewPlace = () => {
+    const {sendRequest, error, clearError, isLoading} = useHttpClient();
     const [formState, inputHandler] = useForm({
         title: {
             value: "",
@@ -23,8 +25,11 @@ const NewPlace = () => {
 
     const placeSubmitHandler = e => {
         e.preventDefault();
-        // TODO
-        // send information to the backend using fetch()
+        sendRequest("http://localhost:3000/api/places", "POST", JSON.stringify({
+            title: formState.inputs.title.value,
+            description: formState.inputs.description.value,
+            address: formState
+        }));
     }
     return (<form className="w-[90%] 
                             m-auto 

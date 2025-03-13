@@ -1,15 +1,44 @@
+import { useEffect, useState } from "react";
 import UserList from "../components/UserList";
+import ErrorModal from "../../share/components/UIElements/ErrorModal";
+import LoadingSpinner from "../../share/components/UIElements/LoadingSpinner";
+
+
 
 const User = () => {
-    const USERS = [{
-        id: 'u1',
-        name: "Kaneki Ken",
-        image: "https://i.pinimg.com/736x/96/53/ed/9653ed1abdb4cce956828c211385d304.jpg",
-        places: 3,
-    }];
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+  const [loadeUsers, setLoadedUsers] = useState();
+
+  useEffect(() => {
+    const sendRequest = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch("http://localhost:3000/api/users/");
+        const data = await response.json();
+        if (!response.ok)
+          throw new Error(data.message);
+        setLoadedUsers(data.users);
+      }
+      catch (err) {
+        setIsLoading(false);
+        setError(err.message);
+      }
+      setIsLoading(false);
+    };
+    sendRequest();
+  }, []);
+
+  const errorHandler = () => {
+    setError(null);
+  };
+
   return (
-    <UserList items={USERS}>
-    </UserList>
+    <>
+      <ErrorModal error={error} onClear={errorHandler}/>
+      {isLoading && <LoadingSpinner/>}
+      {(!isLoading && loadeUsers) && <UserList items={loadeUsers}/>}
+    </>
   )
 };
 
